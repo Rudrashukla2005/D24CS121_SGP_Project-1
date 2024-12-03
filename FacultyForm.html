@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Personal and Professional Details Form</title>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+      <link href="index.css" rel="stylesheet">
+      <style>
+         .card {
+         border: none;
+         border-radius: 10px;
+         margin-bottom: 30px;
+         }
+         .is-invalid {
+         border-color: red !important;
+         }
+         /*css added for extra details */
+         /* Container for the form */
+         .form-container {
+         display: flex;
+         flex-wrap: wrap;
+         gap: 20px; /* space between columns */
+         }
+         /* Define each column to take half of the width */
+         .form-container .col-md-6 {
+         flex: 1 1 48%; /* Each field will take up 48% of the container width */
+         }
+         /* Optional: Ensure that the fields are properly aligned on smaller screens */
+         @media (max-width: 768px) {
+         .form-container .col-md-6 {
+         flex: 0 0 100%; /* Stacks the fields on smaller screens */
+         }
+         }
+      </style>
+   </head>
+   <body style="background-color: #242423;">
+      <div class="container my-5">
+         <h1 class="text-center mb-4 text-white"><b>Personal and Professional Details</b></h1>
+         <form id="detailsForm" class="needs-validation" novalidate enctype="multipart/form-data" method="POST" action="store.php" style="background-color: #333533; border: none;">
+            <div class="card mb-4">
+               <div class="card-header" style="background-color: #f5cb5c; color: black;">
+                  <h3 class="mb-0">Personal Details</h3>
+               </div>
+               <div class="card-body" style="background-color: #333533;">
+                  <div class="row g-3">
+                     <div class="col-md-4">
+                        <label for="firstName" class="form-label text-white">First Name</label>
+                        <input type="text" class="form-control" id="firstName" name="firstName"
+                           placeholder="Enter first name" required>
+                        <div class="invalid-feedback">Please enter your first name.</div>
+                     </div>
+                     <div class="col-md-4">
+                        <label for="lastName" class="form-label text-white">Last Name</label>
+                        <input type="text" class="form-control" id="lastName" name="lastName"
+                           placeholder="Enter last name" required>
+                        <div class="invalid-feedback">Please enter your last name.</div>
+                     </div>
+                     <div class="col-md-4">
+                        <label for="middleName" class="form-label text-white">Middle Name</label>
+                        <input type="text" class="form-control" id="middleName" name="middleName"
+                           placeholder="Enter middle name" required>
+                        <div class="invalid-feedback">Please enter your middle name.</div>
+                     </div>
+                     <div class="col-md-4">
+                        <label for="dob" class="form-label text-white">Date of Birth</label>
+                        <input type="date" class="form-control" id="dob" name="dob" required>
+                        <div class="invalid-feedback">Please enter your date of birth.</div>
+                     </div>
+                     <div class="col-md-6">
+                        <label for="birthState" class="form-label text-white">Birth State</label>
+                        <select class="form-select" id="birthState" name="birthState" required
+                           onchange="updateCitiesForBirth()">
+                           <option selected disabled value="">Choose Birth State...</option>
+                           <option value="Gujarat">Gujarat</option>
+                           <option value="Maharashtra">Maharashtra</option>
+                           <option value="Karnataka">Karnataka</option>
+                           <option value="Delhi">Delhi</option>
+                           <option value="Rajasthan">Rajasthan</option>
+                           <option value="Tamil_Nadu">Tamil Nadu</option>
+                           <!-- Add more states as needed -->
+                        </select>
+                        <div class="invalid-feedback">Please select your birth state.</div>
+                     </div>
+                     <div class="col-md-6">
+                        <label for="birthCity" class="form-label text-white">Birth City</label>
+                        <select class="form-select" id="birthCity" name="birthCity" required>
+                           <option selected disabled value="">Choose Birth City...</option>
+                           <!-- Cities will be dynamically added based on the selected birth state -->
+                        </select>
+                        <div class="invalid-feedback">Please select your birth city.</div>
+                     </div>
+                     <div class="col-md-6">
+                        <label for="adhaarNumber" class="form-label text-white">Aadhaar Card Number</label>
+                        <input type="text" class="form-control" id="adhaarNumber" name="adhaarNumber"
+                           placeholder="Enter Aadhaar number" required>
+                        <div class="invalid-feedback">Please enter a valid Aadhaar card number.</div>
+                     </div>
+                     <div class="col-md-6">
+                        <label for="contactNumber" class="form-label text-white">Contact Number</label>
+                        <input type="tel" class="form-control" id="contactNumber" name="contactNumber" placeholder="Enter contact number" required>
+                        <div class="invalid-feedback">Please enter a valid contact number.</div>
+                     </div>
+                     <div class="col-md-6">
+                        <label for="email" class="form-label text-white">Email</label>
+                        <input type="email" class="form-control" id="email" name="email"
+                           placeholder="Enter email address" required>
+                        <div class="invalid-feedback">Please enter a valid email address.</div>
+                     </div>
+                     <div class="col-12">
+                        <label for="address" class="form-label text-white">Residential Address</label>
+                        <textarea class="form-control" id="address" name="address" rows="3"
+                           placeholder="Enter residential address" required></textarea>
+                        <div class="invalid-feedback">Please enter your residential address.</div>
+                     </div>
+                     <div class="col-md-6">
+                        <label for="state" class="form-label text-white"> Residential State</label>
+                        <select class="form-select" id="state" name="state" required onchange="updateCities()">
+                           <option selected disabled value="">Choose State...</option>
+                           <option value="Gujarat">Gujarat</option>
+                           <option value="Maharashtra">Maharashtra</option>
+                           <option value="Karnataka">Karnataka</option>
+                           <option value="Delhi">Delhi</option>
+                           <option value="Rajasthan">Rajasthan</option>
+                           <option value="Tamil_Nadu">Tamil Nadu</option>
+                           <!-- Add more states as needed -->
+                        </select>
+                        <div class="invalid-feedback">Please select your state.</div>
+                     </div>
+                     <div class="col-md-6">
+                        <label for="city" class="form-label text-white">Residential City</label>
+                        <select class="form-select" id="city" name="city" required>
+                           <option selected disabled value="">Choose City...</option>
+                           <!-- Cities will be dynamically added based on the selected state -->
+                        </select>
+                        <div class="invalid-feedback">Please select your city.</div>
+                     </div>
+                  </div>
+                  <!-- more added columns to the personal details section-->
+                  <!-- Permanent Address -->
+                  <div class="col-12">
+                     <label for="permanentAddress" class="form-label text-white">Permanent Address</label>
+                     <textarea class="form-control" id="permanentAddress" name="permanentAddress" rows="3"
+                        placeholder="Enter permanent address" required></textarea>
+                     <div class="invalid-feedback">Please enter your permanent address.</div>
+                  </div>
+                  <div class="form-container">
+                     <!-- Nationality -->
+                     <div class="col-md-6">
+                        <label for="nationality" class="form-label text-white">Nationality</label>
+                        <input type="text" class="form-control" id="nationality" name="nationality" placeholder="Enter nationality" required>
+                        <div class="invalid-feedback">Please enter your nationality.</div>
+                     </div>
+                     <!-- Mother Tongue -->
+                     <div class="col-md-6">
+                        <label for="motherTongue" class="form-label text-white">Mother Tongue</label>
+                        <input type="text" class="form-control" id="motherTongue" name="motherTongue" placeholder="Enter mother tongue" required>
+                        <div class="invalid-feedback">Please enter your mother tongue.</div>
+                     </div>
+                     <!-- Gender -->
+                     <div class="col-md-6">
+                        <label for="gender" class="form-label text-white">Gender</label>
+                        <select class="form-select" id="gender" name="gender" required>
+                           <option selected disabled value="">Choose Gender...</option>
+                           <option value="Male">Male</option>
+                           <option value="Female">Female</option>
+                           <option value="Other">Other</option>
+                        </select>
+                        <div class="invalid-feedback">Please select your gender.</div>
+                     </div>
+                     <!-- Marital Status -->
+                     <div class="col-md-6">
+                        <label for="maritalStatus" class="form-label text-white">Marital Status</label>
+                        <select class="form-select" id="maritalStatus" name="maritalStatus" required>
+                           <option selected disabled value="">Choose Marital Status...</option>
+                           <option value="Single">Single</option>
+                           <option value="Married">Married</option>
+                           <option value="Divorced">Divorced</option>
+                           <option value="Widowed">Widowed</option>
+                        </select>
+                        <div class="invalid-feedback">Please select your marital status.</div>
+                     </div>
+                     <!-- Caste Category -->
+                     <div class="col-md-6">
+                        <label for="casteCategory" class="form-label text-white">Caste Category</label>
+                        <select class="form-select" id="casteCategory" name="casteCategory" required>
+                           <option selected disabled value="">Choose Caste Category...</option>
+                           <option value="General">General</option>
+                           <option value="OBC">OBC</option>
+                           <option value="SC">SC</option>
+                           <option value="ST">ST</option>
+                        </select>
+                        <div class="invalid-feedback">Please select your caste category.</div>
+                     </div>
+                     <!-- Sub Caste Category -->
+                     <div class="col-md-6">
+                        <label for="subCasteCategory" class="form-label text-white">Sub Caste Category</label>
+                        <input type="text" class="form-control" id="subCasteCategory" name="subCasteCategory" placeholder="Enter sub caste category" required>
+                        <div class="invalid-feedback">Please enter your sub caste category.</div>
+                     </div>
+                     <!-- Blood Group -->
+                     <div class="col-md-6">
+                        <label for="bloodGroup" class="form-label text-white">Blood Group</label>
+                        <select class="form-select" id="bloodGroup" name="bloodGroup" required>
+                           <option selected disabled value="">Choose Blood Group...</option>
+                           <option value="A+">A+</option>
+                           <option value="B+">B+</option>
+                           <option value="AB+">AB+</option>
+                           <option value="O+">O+</option>
+                           <option value="A-">A-</option>
+                           <option value="B-">B-</option>
+                           <option value="AB-">AB-</option>
+                           <option value="O-">O-</option>
+                        </select>
+                        <div class="invalid-feedback">Please select your blood group.</div>
+                     </div>
+                     <!-- Hobbies -->
+                     <div class="col-md-6">
+                        <label for="hobbies" class="form-label text-white">Hobbies</label>
+                        <input type="text" class="form-control" id="hobbies" name="hobbies" placeholder="Enter your hobbies" required>
+                        <div class="invalid-feedback">Please enter your hobbies.</div>
+                     </div>
+                     <!-- Skill Set -->
+                     <div class="col-md-6">
+                        <label for="skillSet" class="form-label text-white">Skill Set</label>
+                        <input type="text" class="form-control" id="skillSet" name="skillSet" placeholder="Enter your skills" required>
+                        <div class="invalid-feedback">Please enter your skill set.</div>
+                     </div>
+                     <!-- Strength -->
+                     <div class="col-md-6">
+                        <label for="strength" class="form-label text-white">Strength</label>
+                        <input type="text" class="form-control" id="strength" name="strength" placeholder="Enter your strengths" required>
+                        <div class="invalid-feedback">Please enter your strengths.</div>
+                     </div>
+                     <!-- Weakness -->
+                     <div class="col-md-6">
+                        <label for="weakness" class="form-label text-white">Weakness</label>
+                        <input type="text" class="form-control" id="weakness" name="weakness" placeholder="Enter your weaknesses" required>
+                        <div class="invalid-feedback">Please enter your weaknesses.</div>
+                     </div>
+                     <!-- PAN Number -->
+                     <div class="col-md-6">
+                        <label for="panNumber" class="form-label text-white">PAN Number</label>
+                        <input type="text" class="form-control" id="panNumber" name="panNumber" placeholder="Enter PAN number" required>
+                        <div class="invalid-feedback">Please enter your PAN number.</div>
+                     </div>
+                     <!-- Passport Number -->
+                     <div class="col-md-6">
+                        <label for="passportNumber" class="form-label text-white">Passport Number</label>
+                        <input type="text" class="form-control" id="passportNumber" name="passportNumber" placeholder="Enter passport number" required>
+                        <div class="invalid-feedback">Please enter your passport number.</div>
+                     </div>
+                     <!-- Passport Issue Date -->
+                     <div class="col-md-6">
+                        <label for="passportIssueDate" class="form-label text-white">Passport Issue Date</label>
+                        <input type="date" class="form-control" id="passportIssueDate" name="passportIssueDate" required>
+                        <div class="invalid-feedback">Please enter your passport issue date.</div>
+                     </div>
+                     <!-- Passport Expiry Date -->
+                     <div class="col-md-6">
+                        <label for="passportExpiryDate" class="form-label text-white">Passport Expiry Date</label>
+                        <input type="date" class="form-control" id="passportExpiryDate" name="passportExpiryDate" required>
+                        <div class="invalid-feedback">Please enter your passport expiry date.</div>
+                     </div>
+                     <!-- Height -->
+                     <div class="col-md-6">
+                        <label for="height" class="form-label text-white">Height</label>
+                        <input type="text" class="form-control" id="height" name="height" placeholder="Enter your height" required>
+                        <div class="invalid-feedback">Please enter your height.</div>
+                     </div>
+                     <!-- Weight -->
+                     <div class="col-md-6">
+                        <label for="weight" class="form-label text-white">Weight</label>
+                        <input type="text" class="form-control" id="weight" name="weight" placeholder="Enter your weight" required>
+                        <div class="invalid-feedback">Please enter your weight.</div>
+                     </div>
+                  </div>
+                  <!--More details of personal details are added above-->
+               </div>
+            </div>
+            <div class="card mb-4">
+               <div class="card-header" style="background-color: #f5cb5c; color: black;">
+                  <h3 class="mb-0">Professional Details</h3>
+               </div>
+               <div class="card-body" style="background-color: #333533;">
+                  <div class="row g-3">
+                     <div class="col-md-6">
+                        <label for="education" class="form-label text-white">Education</label>
+                        <input type="text" class="form-control" id="education" name="education"
+                           placeholder="Enter highest education" required>
+                        <div class="invalid-feedback">Please enter your education details.</div>
+                     </div>
+                     <div class="col-md-3">
+                        <label for="sscPercentage" class="form-label text-white">SSC Percentage</label>
+                        <input type="number" class="form-control" id="sscPercentage" name="sscPercentage"
+                           placeholder="Enter SSC percentage" required>
+                        <div class="invalid-feedback">Please enter your SSC percentage.</div>
+                     </div>
+                     <div class="col-md-3">
+                        <label for="hscPercentage" class="form-label text-white">HSC/Diploma Percentage</label>
+                        <input type="number" class="form-control" id="hscPercentage" name="hscPercentage"
+                           placeholder="Enter HSC/Diploma percentage" required>
+                        <div class="invalid-feedback">Please enter your HSC/Diploma percentage.</div>
+                     </div>
+                     <div class="col-md-6">
+                        <label for="pastJobName" class="form-label text-white">Past Job Name</label>
+                        <input type="text" class="form-control" id="pastJobName" name="pastJobName"
+                           placeholder="Enter past job name" required>
+                        <div class="invalid-feedback">Please enter your past job name.</div>
+                     </div>
+                     <div class="col-md-6">
+                        <label for="pastJobAddress" class="form-label text-white">Past Job Address</label>
+                        <input type="text" class="form-control" id="pastJobAddress" name="pastJobAddress"
+                           placeholder="Enter past job address" required>
+                        <div class="invalid-feedback">Please enter your past job address.</div>
+                     </div>
+                     <div class="row">
+                        <div class="col-md-6">
+                           <label for="profilePhoto" class="form-label text-white">Profile Photo</label>
+                           <input type="file" class="form-control" id="profilePhoto" name="profilePhoto" required>
+                           <div class="invalid-feedback">Please upload a profile photo.</div>
+                        </div>
+                        <div class="col-md-6">
+                           <label for="sscMarksheet" class="form-label text-white">SSC Marksheet</label>
+                           <input type="file" class="form-control" id="sscMarksheet" name="sscMarksheet" required>
+                           <div class="invalid-feedback">Please upload your SSC marksheet.</div>
+                        </div>
+                        <div class="col-md-6">
+                           <label for="hscMarksheet" class="form-label text-white">HSC Marksheet</label>
+                           <input type="file" class="form-control" id="hscMarksheet" name="hscMarksheet" required>
+                           <div class="invalid-feedback">Please upload your HSC marksheet.</div>
+                        </div>
+                        <div class="col-md-6">
+                           <label for="experienceLetter" class="form-label text-white">Experience Letter</label>
+                           <input type="file" class="form-control" id="experienceLetter" name="experienceLetter"
+                              required>
+                           <div class="invalid-feedback">Please upload your experience letter.</div>
+                        </div>
+                        <!--All four necessary documents are added here -->
+                        <div class="col-md-6">
+                           <label for="PAN_CARD" class="form-label text-white">PAN Card</label>
+                           <input type="file" class="form-control" id="PAN_CARD" name="PAN_CARD" required>
+                           <div class="invalid-feedback">Please upload your PAN Card.</div>
+                        </div>
+                        <div class="col-md-6">
+                           <label for="AADHAR_CARD" class="form-label text-white">Aadhar Card</label>
+                           <input type="file" class="form-control" id="AADHAR_CARD" name="AADHAR_CARD" required>
+                           <div class="invalid-feedback">Please upload your Aadhar Card.</div>
+                        </div>
+                        <div class="col-md-6">
+                           <label for="DEGREE_CERTIFICATE" class="form-label text-white">Degree Certificate</label>
+                           <input type="file" class="form-control" id="DEGREE_CERTIFICATE" name="DEGREE_CERTIFICATE" required>
+                           <div class="invalid-feedback">Please upload your Degree Certificate.</div>
+                        </div>
+                        <div class="col-md-6">
+                           <label for="DEGREE_MARKSHEET" class="form-label text-white">Degree Marksheet</label>
+                           <input type="file" class="form-control" id="DEGREE_MARKSHEET" name="DEGREE_MARKSHEET" required>
+                           <div class="invalid-feedback">Please upload your Degree Marksheet.</div>
+                        </div>
+                        <!--More details added in the Professional Details -->
+                        <!-- Experience Before Joining Charusat University -->
+                        <div class="col-md-6">
+                           <label for="experienceBeforeJoining" class="form-label text-white">Experience Before Joining Charusat University</label>
+                           <input type="text" class="form-control" id="experienceBeforeJoining" name="experienceBeforeJoining" placeholder="Enter experience before joining Charusat University" required>
+                           <div class="invalid-feedback">Please enter your experience before joining Charusat University.</div>
+                        </div>
+                        <!-- Employee ID -->
+                        <div class="col-md-6">
+                           <label for="employeeId" class="form-label text-white">Employee ID</label>
+                           <input type="text" class="form-control" id="employeeId" name="employeeId" placeholder="Enter employee ID" required>
+                           <div class="invalid-feedback">Please enter your employee ID.</div>
+                        </div>
+                        <!-- Status -->
+                        <div class="col-md-6">
+                           <label for="status" class="form-label text-white">Status</label>
+                           <select class="form-select" id="status" name="status" required>
+                              <option selected disabled value="">Choose Status...</option>
+                              <option value="Active">Active</option>
+                              <option value="Inactive">Inactive</option>
+                              <option value="On Leave">On Leave</option>
+                           </select>
+                           <div class="invalid-feedback">Please select your status.</div>
+                        </div>
+                        <!-- Abbreviation -->
+                        <div class="col-md-6">
+                           <label for="abbreviation" class="form-label text-white">Abbreviation</label>
+                           <input type="text" class="form-control" id="abbreviation" name="abbreviation" placeholder="Enter abbreviation" required>
+                           <div class="invalid-feedback">Please enter your abbreviation.</div>
+                        </div>
+                        <!-- Date Of Joining -->
+                        <div class="col-md-6">
+                           <label for="dateOfJoining" class="form-label text-white">Date Of Joining</label>
+                           <input type="date" class="form-control" id="dateOfJoining" name="dateOfJoining" required>
+                           <div class="invalid-feedback">Please enter your date of joining.</div>
+                        </div>
+                        <!-- Increment Month -->
+                        <div class="col-md-6">
+                           <label for="incrementMonth" class="form-label text-white">Increment Month</label>
+                           <input type="month" class="form-control" id="incrementMonth" name="incrementMonth" required>
+                           <div class="invalid-feedback">Please select your increment month.</div>
+                        </div>
+                        <!-- Organization -->
+                        <div class="col-md-6">
+                           <label for="organization" class="form-label text-white">Organization</label>
+                           <input type="text" class="form-control" id="organization" name="organization" placeholder="Enter organization name" required>
+                           <div class="invalid-feedback">Please enter your organization name.</div>
+                        </div>
+                        <!-- Sub Organization -->
+                        <div class="col-md-6">
+                           <label for="subOrganization" class="form-label text-white">Sub Organization</label>
+                           <input type="text" class="form-control" id="subOrganization" name="subOrganization" placeholder="Enter sub organization name" required>
+                           <div class="invalid-feedback">Please enter your sub organization name.</div>
+                        </div>
+                        <!-- Department -->
+                        <div class="col-md-6">
+                           <label for="department" class="form-label text-white">Department</label>
+                           <input type="text" class="form-control" id="department" name="department" placeholder="Enter department" required>
+                           <div class="invalid-feedback">Please enter your department.</div>
+                        </div>
+                        <!-- Functional Department -->
+                        <div class="col-md-6">
+                           <label for="functionalDepartment" class="form-label text-white">Functional Department</label>
+                           <input type="text" class="form-control" id="functionalDepartment" name="functionalDepartment" placeholder="Enter functional department" required>
+                           <div class="invalid-feedback">Please enter your functional department.</div>
+                        </div>
+                        <!-- Employee Category -->
+                        <div class="col-md-6">
+                           <label for="employeeCategory" class="form-label text-white">Employee Category</label>
+                           <select class="form-select" id="employeeCategory" name="employeeCategory" required>
+                              <option selected disabled value="">Choose Employee Category...</option>
+                              <option value="Permanent">Permanent</option>
+                              <option value="Contractual">Contractual</option>
+                              <option value="Intern">Intern</option>
+                           </select>
+                           <div class="invalid-feedback">Please select your employee category.</div>
+                        </div>
+                        <!-- Designation -->
+                        <div class="col-md-6">
+                           <label for="designation" class="form-label text-white">Designation</label>
+                           <input type="text" class="form-control" id="designation" name="designation" placeholder="Enter your designation" required>
+                           <div class="invalid-feedback">Please enter your designation.</div>
+                        </div>
+                        <!-- Pay Grade -->
+                        <div class="col-md-6">
+                           <label for="payGrade" class="form-label text-white">Pay Grade</label>
+                           <input type="text" class="form-control" id="payGrade" name="payGrade" placeholder="Enter pay grade" required>
+                           <div class="invalid-feedback">Please enter your pay grade.</div>
+                        </div>
+                        <!-- Gross Salary -->
+                        <div class="col-md-6">
+                           <label for="grossSalary" class="form-label text-white">Gross Salary</label>
+                           <input type="number" class="form-control" id="grossSalary" name="grossSalary" placeholder="Enter gross salary" required>
+                           <div class="invalid-feedback">Please enter your gross salary.</div>
+                        </div>
+                        <!--Details added till here...-->
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <button type="submit" class="btn" style="background-color: #f5cb5c; color: black; margin-left:46%; margin-bottom:2.5%;">Submit</button>
+         </form>
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+      <script>
+         (function () {
+             'use strict';
+             
+             // Select all forms with class 'needs-validation'
+             const forms = document.querySelectorAll('.needs-validation');
+             
+             // Loop over each form to apply validation
+             Array.prototype.slice.call(forms)
+                 .forEach(function (form) {
+                     form.addEventListener('submit', function (event) {
+                         if (!form.checkValidity()) {
+                             event.preventDefault();
+                             event.stopPropagation();
+         
+                             // Highlight invalid fields
+                             const invalidFields = form.querySelectorAll(':invalid');
+                             invalidFields.forEach(field => {
+                                 field.classList.add('is-invalid');
+                                 
+                                 // Add event listener to remove invalid state when input is corrected
+                                 field.addEventListener('input', function () {
+                                     if (field.checkValidity()) {
+                                         field.classList.remove('is-invalid');
+                                     }
+                                 });
+                             });
+                         }
+                         form.classList.add('was-validated');
+                     }, false);
+                 });
+         })();
+      </script>
+      <script>
+         // Define the states and their respective cities
+         const stateCities = {
+             Gujarat: [
+                 "Ahmedabad", "Surat", "Vadodara", "Rajkot", "Bhavnagar", "Jamnagar",
+                 "Junagadh", "Gandhinagar", "Anand", "Nadiad", "Morbi", "Mehsana",
+                 "Bharuch", "Porbandar", "Navsari", "Surendranagar", "Amreli", "Vapi",
+                 "Palanpur", "Bhuj", "Gondal", "Veraval", "Godhra", "Botad", "Dahod",
+                 "Patan", "Valsad", "Kalol", "Modasa", "Virpur", "Khambhat", "Dhoraji",
+                 "Mahudha"
+             ],
+             Maharashtra: [
+                 "Mumbai", "Pune", "Nagpur", "Nashik", "Thane", "Aurangabad", "Solapur",
+                 "Bhiwandi", "Amravati", "Nanded", "Kolhapur", "Ulhasnagar", "Sangli",
+                 "Malegaon", "Jalgaon", "Akola", "Latur", "Dhule", "Ahmednagar",
+                 "Chandrapur", "Parbhani", "Ichalkaranji", "Jalna", "Ambarnath",
+                 "Bhusawal", "Panvel", "Badlapur", "Beed", "Gondia", "Satara",
+                 "Baramati", "Yavatmal", "Achalpur", "Osmanabad", "Nandurbar",
+                 "Wardha", "Udgir", "Hinganghat", "Navi Mumbai", "Mira-Bhayandar",
+                 "Palghar", "Raigad", "Ratnagiri", "Sindhudurg", "Washim",
+                 "Buldhana", "Gadchiroli", "Hingoli"
+             ],
+             Karnataka: [
+                 "Bengaluru", "Mysuru", "Mangaluru", "Hubli", "Belagavi", "Gulbarga",
+                 "Davanagere", "Bellary", "Shimoga", "Tumkur", "Bidar", "Hassan",
+                 "Udupi", "Mandya", "Chitradurga", "Raichur", "Bagalkot", "Chikmagalur",
+                 "Haveri", "Kolar", "Koppal", "Yadgir", "Ramanagara", "Chamarajanagar",
+                 "Kodagu", "Bijapur"
+             ],
+             Delhi: [
+                 "New Delhi", "Delhi Cantonment", "Shahdara", "Dwarka", "Rohini",
+                 "Narela", "Karol Bagh", "Janakpuri", "Najafgarh", "Vasant Kunj"
+             ],
+             Tamil_Nadu: [
+                 "Chennai", "Coimbatore", "Madurai", "Tiruchirappalli", "Salem",
+                 "Tiruppur", "Erode", "Vellore", "Thoothukudi", "Nagercoil",
+                 "Dindigul", "Cuddalore", "Kanchipuram", "Kanyakumari", "Thanjavur",
+                 "Namakkal", "Pudukkottai", "Krishnagiri", "Karur", "Nagapattinam"
+             ],
+             Rajasthan: [
+                 "Jaipur", "Jodhpur", "Udaipur", "Kota", "Ajmer", "Bikaner",
+                 "Alwar", "Bhilwara", "Sri Ganganagar", "Sikar", "Pali", "Barmer",
+                 "Bundi", "Chittorgarh", "Hanumangarh", "Tonk", "Dholpur", "Jaisalmer"
+             ]
+         };
+         
+         
+         // Function to update the cities dropdown based on selected state
+         function updateCities() {
+             const stateSelect = document.getElementById("state");
+             const citySelect = document.getElementById("city");
+         
+             citySelect.innerHTML = '<option selected disabled value="">Choose City...</option>';
+             const selectedState = stateSelect.value;
+         
+             if (stateCities[selectedState]) {
+                 stateCities[selectedState].forEach(city => {
+                     const option = document.createElement("option");
+                     option.value = city;
+                     option.textContent = city;
+                     citySelect.appendChild(option);
+                 });
+             }
+         }
+         
+         // Function to update the birth cities dropdown based on selected birth state
+         function updateCitiesForBirth() {
+             const birthStateSelect = document.getElementById("birthState");
+             const birthCitySelect = document.getElementById("birthCity");
+         
+             birthCitySelect.innerHTML = '<option selected disabled value="">Choose Birth City...</option>';
+             const selectedBirthState = birthStateSelect.value;
+         
+             if (stateCities[selectedBirthState]) {
+                 stateCities[selectedBirthState].forEach(city => {
+                     const option = document.createElement("option");
+                     option.value = city;
+                     option.textContent = city;
+                     birthCitySelect.appendChild(option);
+                 });
+             }
+         }
+      </script>
+   </body>
+</html>
